@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CategorieController!{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12-lg-6">
+    <h1 class="text-center mt-3 mb-3">Liste des categories</h1>
+
+    {% for repos in repo %}
+        <li><a href="{{ path('reference', {'id':repos.id}) }}">{{ repos.reference }}</a> </li>
+        {% set difference = date( repos.dateFin).diff(date(repos.dateDebut)) %}
+        {% set leftDays = difference.days %}
+        {% if leftDays == 1 %}
+            1 day
+        {% elseif leftDays <=90  %}
+            <p>nouveaute</p>
+        {% endif %}
+
+
+
+
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
