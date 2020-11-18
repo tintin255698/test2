@@ -23,10 +23,10 @@ class CategorieRepository extends ServiceEntityRepository
     public function findByExampleField()
     {
         return $this->createQueryBuilder('c')
-            ->select('c' )
+            ->select('c,x' )
             ->join('c.produits', 'x')
-            ->Where('x.dateDebut < :now')
-            ->orWhere('x.dateFin > :now')
+            ->Where('x.dateFin > :now')
+            ->orWhere('x.dateFin is NULL')
             ->setParameter('now', new \DateTime('now'))
             ->getQuery()
             ->getResult()

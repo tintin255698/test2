@@ -5,10 +5,9 @@
 {% block body %}
 
     <div class="container">
-    <div class="row">
-    <div class="col-md-12-lg-6">
+        <div class="row">
+            <div class="col-md-12-lg-6">
 <h1 class=" mt-3 mb-3">Detail du produit</h1>
-
 
     {% for repos in repo %}
         <li>{{ repos.reference }}</li>
@@ -17,36 +16,29 @@
             <li>{{ repos.hauteur }}</li>
             <li>{{ repos.codeProduit }}</li>
             <li>{{ repos.codeCouleur }}</li>
-        <li>{{ repos.dateDebut| date("m/d/Y") }}</li>
-        <li>{{ repos.dateFin| date("m/d/Y") }}</li>
-        {% set difference = date( repos.dateFin).diff(date(repos.dateDebut)) %}
-        {% set leftDays = difference.days %}
-        {% if leftDays == 1 %}
-            1 day
-        {% elseif leftDays <=90  %}
-           <p>nouveaute</p>
-        {% endif %}
+            <li>{{ repos.isNouveaute() }}</li>
+
+    {{ dump(repo) }}
+            </div>
+
+            <div class="col-md-12-lg-6 ml-5 mt-5">
+            <img src="/ML2C3_zoom.jpg" width="200" height="300"  alt="" class="pb-5">
+            </div>
+        <div>
+
+            <div class="row">
+            <hr>
+            <h3 class="titre">Ajouter un commentaire</h3>
+
+
+            {{ form_start(form) }}
+            {{ form_widget(form)}}
+            <button type="submit" class="btn btn-primary mb-5">Ajouter</button>
+            {{ form_end(form) }}
+
+            </div>
 
         </div>
-
-    <hr>
-    <h3 class="titre">Ajouter un commentaire</h3>
-
-
-    {{ form_start(form) }}
-    {{ form_widget(form)}}
-    <button type="submit" class="btn btn-primary mb-5">Ajouter</button>
-    {{ form_end(form) }}
-
-
-
-
-    <div class="col-md-12-lg-6 ml-5 mt-5">
-        <img src="/ML2C3_zoom.jpg" width="200" height="300"  alt="" class="pb-5">
-    </div>
-    <div>
-
-    </div>
 
     {% endfor %}
 

@@ -10,7 +10,13 @@
     <h1 class="text-center mt-3 mb-3">Liste des produits</h1>
 
 {% for repos in repo %}
-    <li><a href="{{ path('categorie', {'id':repos.id}) }}">{{ repos.noms }}</a> </li>
+    <li><a href="{{ path('categorie', {'nom':repos.noms}) }}">{{ repos.noms }}</a> </li>
+    {% for repos2 in repos %}
+        {{ repos2.isNouveaute() }}
+    {% endfor %}
+
+
+
 {% endfor %}
 
 

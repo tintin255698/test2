@@ -6,7 +6,9 @@ use App\Entity\Categorie;
 use App\Entity\Commentaire;
 use App\Entity\Produit;
 use App\Form\CommentaireType;
+use DateTime;
 use Doctrine\ORM\EntityManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,18 +23,17 @@ class CategorieController extends AbstractController
     {
         $repo = $this->getDoctrine()->getRepository(categorie::class)->findByExampleField();
 
-
         return $this->render('categorie/index.html.twig', [
             'repo' => $repo,
         ]);
     }
 
     /**
-     * @Route("/categorie/{id}", name="categorie")
+     * @Route("/{nom}", name="categorie")
      */
-    public function produit($id): Response
+    public function produit($nom): Response
     {
-        $repo = $this->getDoctrine()->getRepository(produit::class)->findByExampleField2($id);
+        $repo = $this->getDoctrine()->getRepository(produit::class)->findByExampleField2($nom);
 
         return $this->render('categorie/produit.html.twig', [
             'repo' => $repo,
@@ -40,12 +41,12 @@ class CategorieController extends AbstractController
     }
 
     /**
-     * @Route("/categorie/ref/{id}", name="reference")
+     * @Route("/{nom}/{reference}", name="reference")
+     *
      */
-    public function reference($id, Request $request, Produit $produit, EntityManager $em): Response
+    public function reference($reference, Request $request, Produit $produit): Response
     {
-        $repo = $this->getDoctrine()->getRepository(produit::class)->findByExampleField3($id);
-
+        $repo = $this->getDoctrine()->getRepository(produit::class)->findByExampleField3($reference);
 
         $post = new Commentaire();
 
@@ -53,9 +54,8 @@ class CategorieController extends AbstractController
 
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $post->setProduit($produit->getId());
+            $post->setProduit($produit);
             $doctrine = $this->getDoctrine()->getManager();
 
             $doctrine->persist($post);
@@ -63,14 +63,9 @@ class CategorieController extends AbstractController
         }
 
 
-        $commentaire = $em->getRepository('commentaire')->findBy(
-                array('id' => 'ASC')
-            );
-
         return $this->render('categorie/reference.html.twig', [
             'repo' => $repo,
             'form' => $form->createView(),
-            'commentaire'=>$commentaire
         ]);
     }
 

@@ -7,6 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+
+require_once 'Produit.php';
+
 /**
  * @ORM\Entity(repositoryClass=CategorieRepository::class)
  */
@@ -80,4 +83,15 @@ class Categorie
 
         return $this;
     }
+
+
+    public function isNouveaute(Produit $produit)
+    {
+        if($produit >= (new \DateTime("now"))->modify('-3 month')){    // si la date de début est supérieure ou égale à maintenant moins trois mois
+            return true;
+        }
+        return false;
+    }
+
+
 }

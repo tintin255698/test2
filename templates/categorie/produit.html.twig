@@ -10,18 +10,8 @@
     <h1 class="text-center mt-3 mb-3">Liste des categories</h1>
 
     {% for repos in repo %}
-        <li><a href="{{ path('reference', {'id':repos.id}) }}">{{ repos.reference }}</a> </li>
-        {% set difference = date( repos.dateFin).diff(date(repos.dateDebut)) %}
-        {% set leftDays = difference.days %}
-        {% if leftDays == 1 %}
-            1 day
-        {% elseif leftDays <=90  %}
-            <p>nouveaute</p>
-        {% endif %}
-
-
-
-
+        <li><a href="{{ path('reference', {'nom':repos.categorie.noms,'reference':repos.reference}) }}">{{ repos.reference }}</a> </li>
+{{ repos.isNouveaute() }}
 
     {% endfor %}
 

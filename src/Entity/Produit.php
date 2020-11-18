@@ -37,7 +37,7 @@ class Produit
     /**
      * @ORM\Column(type="datetime")
      */
-    private $dateDebut;
+    public $dateDebut;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -233,4 +233,13 @@ class Produit
 
         return $this;
     }
+
+    public function isNouveaute()
+    {
+        if($this->dateDebut >= (new \DateTime("now"))->modify('-3 month')){    // si la date de début est supérieure ou égale à maintenant moins trois mois
+            return 'nouveaute';
+        }
+        return "";
+    }
+
 }

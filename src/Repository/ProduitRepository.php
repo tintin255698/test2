@@ -19,28 +19,30 @@ class ProduitRepository extends ServiceEntityRepository
         parent::__construct($registry, Produit::class);
     }
 
-    public function findByExampleField2($id)
+    public function findByExampleField2($nom)
     {
         return $this->createQueryBuilder('p')
             ->select('p,x' )
             ->join('p.categorie', 'x')
-            ->Where('p.dateDebut < :now')
+            ->Where('p.dateFin > :now')
+            ->orWhere('p.dateFin is NULL')
             ->setParameter('now', new \DateTime('now'))
-            ->andwhere('x.id= :produit_id')
-            ->setParameter('produit_id', $id)
+            ->andwhere('x.noms= :produit_id')
+            ->setParameter('produit_id', $nom)
             ->getQuery()
             ->getResult()
             ;
     }
 
-    public function findByExampleField3($id)
+    public function findByExampleField3($reference)
     {
         return $this->createQueryBuilder('p')
             ->select('p' )
-            ->Where('p.dateDebut < :now')
+            ->Where('p.dateFin > :now')
+            ->orWhere('p.dateFin is NULL')
             ->setParameter('now', new \DateTime('now'))
-            ->andwhere('p.id= :produit_id')
-            ->setParameter('produit_id', $id)
+            ->andwhere('p.reference= :produit_id')
+            ->setParameter('produit_id', $reference)
             ->getQuery()
             ->getResult()
             ;
