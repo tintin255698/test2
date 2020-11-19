@@ -84,14 +84,20 @@ class Categorie
         return $this;
     }
 
-
-    public function isNouveaute(Produit $produit)
+    public function isNouveaute()
     {
-        if($produit >= (new \DateTime("now"))->modify('-3 month')){    // si la date de début est supérieure ou égale à maintenant moins trois mois
-            return true;
+        if(!empty($this->produits)){    // si la catégorie a des produits
+            $new = true;
+            foreach($this->produits as $produit){    // on regarde pour chacun d'eux
+                $new = $new &&$produit->isNouveaute();    // si c'est une nouveauté ou non
+            }
+            // il y a un ET logique, donc si au un des produits n'est pas une nouveautés, alors la catégorie n'en est pas une non plus
+            if($new){return "nouveaute";}
         }
         return false;
     }
+
+
 
 
 }

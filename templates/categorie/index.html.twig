@@ -11,9 +11,7 @@
 
 {% for repos in repo %}
     <li><a href="{{ path('categorie', {'nom':repos.noms}) }}">{{ repos.noms }}</a> </li>
-    {% for repos2 in repos %}
-        {{ repos2.isNouveaute() }}
-    {% endfor %}
+   {{ repos.isNouveaute() }}
 
 
 

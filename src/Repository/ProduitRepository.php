@@ -49,6 +49,18 @@ class ProduitRepository extends ServiceEntityRepository
     }
 
 
+    public function commentaire()
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p,c' )
+            ->Join('p.commentaires', 'c')
+            ->orderBy('c.createdAt', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
     // /**
     //  * @return Produit[] Returns an array of Produit objects
     //  */

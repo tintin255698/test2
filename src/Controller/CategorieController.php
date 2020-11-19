@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategorieController extends AbstractController
 {
     /**
-     * @Route("/", name="")
+     * @Route("/", name="", requirements={"cat"="[a-zA-Z0-9]+"}))
      */
     public function index(): Response
     {
@@ -29,7 +29,7 @@ class CategorieController extends AbstractController
     }
 
     /**
-     * @Route("/{nom}", name="categorie")
+     * @Route("/{nom}", name="categorie", requirements={"cat"="[a-zA-Z0-9]+"}))
      */
     public function produit($nom): Response
     {
@@ -41,7 +41,7 @@ class CategorieController extends AbstractController
     }
 
     /**
-     * @Route("/{nom}/{reference}", name="reference")
+     * @Route("/{nom}/{reference}", name="reference", requirements={"cat"="[a-zA-Z0-9]+"}))
      *
      */
     public function reference($reference, Request $request, Produit $produit): Response
@@ -62,10 +62,13 @@ class CategorieController extends AbstractController
             $doctrine->flush();
         }
 
+        $commentaire = $this->getDoctrine()->getRepository(commentaire::class)->commentaire($produit->getId());
 
         return $this->render('categorie/reference.html.twig', [
             'repo' => $repo,
             'form' => $form->createView(),
+            'commentaire'=> $commentaire
+
         ]);
     }
 
