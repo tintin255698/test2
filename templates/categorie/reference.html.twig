@@ -19,7 +19,6 @@
     <div class="col-lg-6">
         <li>{{ repos.codeProduit }}</li>
         <li>{{ repos.codeCouleur }}</li>
-
         {{ repos.isNouveaute() }}
     </div>
     <div>
@@ -36,6 +35,18 @@
 
 
         <hr>
+
+        <h3>Ajouter un commentaire</h3>
+
+    {% for commentaire in repos.commentaires %}
+   {{ commentaire.createdAt|date("m/d/Y") }}
+
+    {% endfor %}
+
+
+
+
+
 
         <h3>Ajouter un commentaire</h3>
 

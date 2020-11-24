@@ -37,7 +37,8 @@ class ProduitRepository extends ServiceEntityRepository
     public function findByExampleField3($reference)
     {
         return $this->createQueryBuilder('p')
-            ->select('p' )
+            ->select('p,c' )
+            ->join('p.commentaires','c')
             ->Where('p.dateFin > :now')
             ->orWhere('p.dateFin is NULL')
             ->setParameter('now', new \DateTime('now'))

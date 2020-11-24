@@ -33,21 +33,6 @@ class CategorieRepository extends ServiceEntityRepository
             ;
     }
 
-    public function findByExampleField2($id)
-    {
-        return $this->createQueryBuilder('c')
-            ->select('p,c' )
-            ->join('c.produits', 'p')
-            ->Where('p.dateDebut < :now')
-            ->setParameter('now', new \DateTime('now'))
-            ->andwhere('p.id= :produit_id')
-            ->setParameter('produit_id', $id)
-            ->getQuery()
-            ->getResult()
-            ;
-    }
-
-
 
     // /**
     //  * @return Categorie[] Returns an array of Categorie objects

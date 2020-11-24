@@ -71,6 +71,7 @@ class Produit
 
     /**
      * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="produit", orphanRemoval=true)
+     * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $commentaires;
 
